@@ -23,7 +23,7 @@ app.use(cors({
 // Konfigurasi rate limiter untuk endpoint autentikasi (5 request per 15 menit)
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 menit dalam milidetik
-  max: 5, // batas maksimal 5 request per IP
+  max: 20, // batas maksimal 5 request per IP
   message: {
     success: false,
     message: 'Too many requests from this IP, please try again after 15 minutes',
