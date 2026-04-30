@@ -3,7 +3,7 @@ const db = require('../config/database');
 class User {
   static async create({ name, username, email, phone, password, balance }) {
     const result = await db.query(
-      'INSERT INTO users (name, username, email, phone, password, balance) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, username, email, phone, balance, created_at',
+      'INSERT INTO users (name, username, email, phone, password, balance) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, username, email, phone, balance, created_at',
       [name, username, email, phone, password, balance]
     );
     return result.rows[0];
