@@ -31,7 +31,7 @@ export default function ItemsPage() {
 
         const fetchItems = async () => {
             try {
-                const response = await fetch("http://localhost:3001/items");
+                const response = await fetch("http://process.env.NEXT_PUBLIC_API_URL/items");
                 const data = await response.json();
 
                 if (!response.ok || !data.success) {
@@ -59,7 +59,7 @@ export default function ItemsPage() {
     const handleBuy = async (itemId: number) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:3001/transaction/create", {
+            const response = await fetch("http://process.env.NEXT_PUBLIC_API_URL/transaction/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -23,7 +23,7 @@ export default function TransactionsPage() {
     const fetchTransactions = async (userId: number) => {
         try {
             // Backend menggunakan query params untuk mengambil history user_id
-            const response = await fetch(`http://localhost:3001/user/history?user_id=${userId}`);
+            const response = await fetch(`http://process.env.NEXT_PUBLIC_API_URL/user/history?user_id=${userId}`);
             const data = await response.json();
             if (data.success) {
                 setTransactions(data.payload);
@@ -52,7 +52,7 @@ export default function TransactionsPage() {
     const handlePay = async (transactionId: number) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://localhost:3001/transaction/pay/${transactionId}`, {
+            const response = await fetch(`http://process.env.NEXT_PUBLIC_API_URL/transaction/pay/${transactionId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`

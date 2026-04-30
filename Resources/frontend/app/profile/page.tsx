@@ -42,8 +42,8 @@ export default function ProfilePage() {
         const fetchDashboardData = async () => {
             try {
                 const [historyRes, spentRes] = await Promise.all([
-                    fetch(`http://localhost:3001/user/history?user_id=${parsedUser.id}`),
-                    fetch(`http://localhost:3001/user/total-spent?user_id=${parsedUser.id}`)
+                    fetch(`http://process.env.NEXT_PUBLIC_API_URL/user/history?user_id=${parsedUser.id}`),
+                    fetch(`http://process.env.NEXT_PUBLIC_API_URL/user/total-spent?user_id=${parsedUser.id}`)
                 ]);
 
                 const historyData = await historyRes.json();
@@ -71,7 +71,7 @@ export default function ProfilePage() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://localhost:3001/user/update", {
+            const response = await fetch("http://process.env.NEXT_PUBLIC_API_URL/user/update", {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
