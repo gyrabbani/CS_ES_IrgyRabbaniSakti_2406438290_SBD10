@@ -23,7 +23,7 @@ export default function TransactionsPage() {
     const fetchTransactions = async (userId: number) => {
         try {
             // Backend menggunakan query params untuk mengambil history user_id
-            const response = await fetch(`http://process.env.NEXT_PUBLIC_API_URL/user/history?user_id=${userId}`);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/history?user_id=${userId}`);
             const data = await response.json();
             if (data.success) {
                 setTransactions(data.payload);
@@ -52,7 +52,7 @@ export default function TransactionsPage() {
     const handlePay = async (transactionId: number) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch(`http://process.env.NEXT_PUBLIC_API_URL/transaction/pay/${transactionId}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/pay/${transactionId}`, {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -68,12 +68,12 @@ export default function TransactionsPage() {
 
             alert("Pembayaran Berhasil!");
 
-            // Update saldo di localStorage
+            // update saldo di localStorage
             const updatedUser = { ...user, balance: data.payload.newBalance };
             localStorage.setItem("user", JSON.stringify(updatedUser));
             setUser(updatedUser);
 
-            // Refresh daftar transaksi
+            // refresh daftar transaksi
             fetchTransactions(user.id);
         } catch (err) {
             alert("Terjadi kesalahan saat memproses pembayaran.");

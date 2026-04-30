@@ -10,7 +10,7 @@ export default function ProfilePage() {
     const [history, setHistory] = useState<any[]>([]);
     const [totalSpent, setTotalSpent] = useState(0);
 
-    // State untuk form update
+    // state untuk form update
     const [isEditing, setIsEditing] = useState(false);
     const [formData, setFormData] = useState({
         name: "",
@@ -38,12 +38,12 @@ export default function ProfilePage() {
             phone: parsedUser.phone || "",
         });
 
-        // Mengambil total pengeluaran dan histori transaksi
+        // mengambil total pengeluaran dan histori transaksi
         const fetchDashboardData = async () => {
             try {
                 const [historyRes, spentRes] = await Promise.all([
-                    fetch(`http://process.env.NEXT_PUBLIC_API_URL/user/history?user_id=${parsedUser.id}`),
-                    fetch(`http://process.env.NEXT_PUBLIC_API_URL/user/total-spent?user_id=${parsedUser.id}`)
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/history?user_id=${parsedUser.id}`),
+                    fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/total-spent?user_id=${parsedUser.id}`)
                 ]);
 
                 const historyData = await historyRes.json();
@@ -71,7 +71,7 @@ export default function ProfilePage() {
 
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://process.env.NEXT_PUBLIC_API_URL/user/update", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/update`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -91,7 +91,7 @@ export default function ProfilePage() {
                 throw new Error(data.message || "Gagal memperbarui profil");
             }
 
-            // Update data di state dan localStorage
+            // update data di state dan localStorage
             const updatedUser = { ...user, name: formData.name, username: formData.username, phone: formData.phone };
             setUser(updatedUser);
             localStorage.setItem("user", JSON.stringify(updatedUser));
@@ -132,7 +132,7 @@ export default function ProfilePage() {
             </nav>
 
             <main className="max-w-6xl mx-auto p-6 mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Kolom Kiri: Detail Profil & Form Update */}
+                {/* kolom kiri detail pprofil & form update */}
                 <div className="md:col-span-1 space-y-6">
                     <div className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
                         <div className="flex justify-between items-center mb-4">
@@ -191,7 +191,7 @@ export default function ProfilePage() {
                         )}
                     </div>
 
-                    {/* Card Info Saldo & Pengeluaran */}
+                    {/* card info saldo & pengeluaran */}
                     <div className="bg-yellow-400 rounded-xl shadow-md p-6 text-gray-900">
                         <h3 className="text-lg font-bold mb-4">Informasi Keuangan</h3>
                         <div className="mb-4">
@@ -205,7 +205,7 @@ export default function ProfilePage() {
                     </div>
                 </div>
 
-                {/* Kolom Kanan: Histori Transaksi */}
+                {/* kolom kanan histori transaksi */}
                 <div className="md:col-span-2">
                     <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
                         <div className="p-6 border-b border-gray-200 flex justify-between items-center bg-gray-50">
@@ -221,7 +221,6 @@ export default function ProfilePage() {
                             <ul className="divide-y divide-gray-100">
                                 {history.map((trx) => (
                                     <li key={trx.id} className="p-6 hover:bg-gray-50 flex flex-col sm:flex-row justify-between items-center gap-4 transition-colors">
-                                        {/* Bagian ikon sudah dihapus, langsung menampilkan teks saja */}
                                         <div>
                                             <h3 className="font-bold text-gray-900">{trx.item_name} <span className="text-sm font-normal text-gray-500">x{trx.quantity}</span></h3>
                                             <p className="text-sm text-gray-500">{new Date(trx.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</p>

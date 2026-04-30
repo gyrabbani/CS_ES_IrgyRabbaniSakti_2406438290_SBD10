@@ -31,7 +31,7 @@ export default function ItemsPage() {
 
         const fetchItems = async () => {
             try {
-                const response = await fetch("http://process.env.NEXT_PUBLIC_API_URL/items");
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/items`);
                 const data = await response.json();
 
                 if (!response.ok || !data.success) {
@@ -55,20 +55,20 @@ export default function ItemsPage() {
         router.push("/login");
     };
 
-    // Fungsi untuk membuat transaksi baru
+    // fungsi untuk membuat transaksi baru
     const handleBuy = async (itemId: number) => {
         try {
             const token = localStorage.getItem("token");
-            const response = await fetch("http://process.env.NEXT_PUBLIC_API_URL/transaction/create", {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transaction/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}` // Wajib kirim token karena endpoint diproteksi
+                    "Authorization": `Bearer ${token}` // wajib kirim token karena endpoint diproteksi
                 },
                 body: JSON.stringify({
                     user_id: user.id,
                     item_id: itemId,
-                    quantity: 1, // Kita set default beli 1 barang
+                    quantity: 1,
                     description: "Pembelian dari web frontend"
                 }),
             });
@@ -80,7 +80,6 @@ export default function ItemsPage() {
                 return;
             }
 
-            // Jika sukses dibuat, langsung arahkan ke halaman transaksi
             router.push("/transactions");
         } catch (err) {
             alert("Terjadi kesalahan sistem saat membuat transaksi.");
@@ -101,7 +100,7 @@ export default function ItemsPage() {
                 <div className="max-w-6xl mx-auto flex justify-between items-center">
                     <h1 className="text-2xl font-bold text-gray-900">UI Store</h1>
                     <div className="flex gap-4 items-center">
-                        {/* Link baru ke halaman Profil */}
+                        {/* link baru ke halaman Profil */}
                         <Link href="/profile" className="text-gray-800 font-semibold hover:text-gray-600">
                             Profil Saya
                         </Link>
