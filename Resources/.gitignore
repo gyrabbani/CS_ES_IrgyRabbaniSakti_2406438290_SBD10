@@ -1,0 +1,6 @@
+# mengabaikan file backup database lokal
+dump.rdb
+
+# mengabaikan file sistem operasi atau IDE
+.DS_Store
+.vscode/
