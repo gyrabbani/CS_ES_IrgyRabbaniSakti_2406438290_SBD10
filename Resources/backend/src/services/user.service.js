@@ -20,6 +20,7 @@ class UserService {
       email,
       phone,
       password: hashedPassword,
+      balance: 50000000,
     });
 
     return user;

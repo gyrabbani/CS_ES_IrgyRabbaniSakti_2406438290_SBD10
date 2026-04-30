@@ -4,7 +4,7 @@ class User {
   static async create({ name, username, email, phone, password }) {
     const result = await db.query(
       'INSERT INTO users (name, username, email, phone, password) VALUES ($1, $2, $3, $4, $5) RETURNING id, name, username, email, phone, balance, created_at',
-      [name, username, email, phone, password]
+      [name, username, email, phone, password, balance] // Tambahkan balance di sini
     );
     return result.rows[0];
   }
